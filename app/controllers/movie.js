@@ -1,5 +1,7 @@
 var Movie = require("../models/movie");
 var _ = require("underscore");
+
+var Comment = require('../models/comment');
 // list page
 exports.list = function(req , res) {
 	Movie.fetch( function( err, movies) {
@@ -90,10 +92,17 @@ exports.save = function(req ,res) {
 exports.detail = function(req , res) {
 	var id = req.params.id;
 	Movie.findById(id , function(err , movie) {
-		res.render("detail" , {
-			title : movie.title,
-			movie : movie
-		});
+		Comment
+			.find({movie: id})
+			// 到user表中查到name
+			.populate('from', 'name')
+			.exec(function(err, comments){
+				res.render("detail" , {
+					title : movie.title,
+					movie : movie,
+					comments: comments
+				});
+			});
 	});
 
 }

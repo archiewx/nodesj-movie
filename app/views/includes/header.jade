@@ -9,12 +9,12 @@
 		.navbar-header
 			a.navbar-brand(href="/") 重度科幻迷
 		if user
-			p.nabar-text.navbar-right
+			p.navbar-text.navbar-right
 				span 欢迎您，#{user.name}
 				span &nbsp;|&nbsp;
 				a.navbar-link(href="/logout") 登出
 		else
-			p.nabar-text.navbar-right
+			p.navbar-text.navbar-right
 				a.navbar-link(href="#", data-toggle="modal", data-target="#signupModal") 注册
 				span &nbsp;|&nbsp;
 				a.navbar-link(href="#", data-toggle="modal", data-target="#signinModal") 登录
