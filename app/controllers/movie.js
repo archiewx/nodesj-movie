@@ -94,8 +94,9 @@ exports.detail = function(req , res) {
 	Movie.findById(id , function(err , movie) {
 		Comment
 			.find({movie: id})
-			// 到user表中查到name
+			// 到user表中查到name给from中name赋值
 			.populate('from', 'name')
+			.populate('replys.from replys.to', 'name')
 			.exec(function(err, comments){
 				res.render("detail" , {
 					title : movie.title,

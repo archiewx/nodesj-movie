@@ -12,17 +12,35 @@ block content
 							each item in comments
 								li.media
 									.pull-left
-										img.media-object(src="http://img.mukewang.com/564d3741000197a101800180-200-200.jpg", width="64", height="64")
+										a.comment(href="#comments", data-cid="#{item._id}", data-tid="#{item.from._id}")
+											img.media-object(src="http://img.mukewang.com/564d3741000197a101800180-200-200.jpg", width="64", height="64")
 									.media-body
 										h4.media-heading #{item.from.name}
 										p #{item.content}
+										if item.replys && item.replys.length > 0
+											each reply in item.replys
+												.media
+													.pull-left
+														a.comment(href="#comments", data-cid="#{item._id}", data-tid="#{reply.from._id}")
+															img.media-object(src="http://img.mukewang.com/564d3741000197a101800180-200-200.jpg", width="64", height="64")
+													.media-body
+														h5.media-heading 
+															| #{reply.from.name}
+															span.text-info &nbsp;回复&nbsp;
+															| #{reply.to.name}
+														p #{reply.content}
 								hr
-							form(method="post", action="/user/comment")
-								input(type="hidden", name="comment[movie]", value="#{movie._id}")
-								input(type="hidden", name="comment[from]", value="#{user._id}")
-								.form-group
-									textarea.form-control(row="3", name="comment[content]")
-								button.btn.btn-primary(type="submit") 提交
+							#comments
+								form#commentForm(method="post", action="/user/comment")
+									input(type="hidden", name="comment[movie]", value="#{movie._id}")
+									if user
+										input(type="hidden", name="comment[from]", value="#{user._id}")
+									.form-group
+										textarea.form-control(row="3", name="comment[content]")
+									if user
+										button.btn.btn-primary(type="submit") 提交
+									else 
+										a.navbar-link(href="#", data-toggle="modal", data-target="#signinModal") 登录后评论
 
 
 			.col-md-5
@@ -39,3 +57,4 @@ block content
 					dd=movie.year
 					dt 简介
 					dd=movie.summary
+	script(src="/js/detail.js")

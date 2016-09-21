@@ -18,6 +18,9 @@ exports.signin = function(req, res) {
 	var name = _user.name;
 	var passowrd = _user.password;
 
+	console.log(req.headers.referer);
+	var refPath = req.headers.referer;
+	refPath = refPath.match(/(\/(\w*))*$/g)[0];
 	User.findOne({name:name}, function(err, user) {
 		if(err) {
 			console.log(err);
@@ -33,7 +36,7 @@ exports.signin = function(req, res) {
 
 			if(isMatch) {
 				req.session.user = user;
-				return res.redirect('/');
+				return res.redirect(refPath);
 			} else {
 				return res.redirect('/signin');
 			}
