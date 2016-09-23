@@ -22,4 +22,26 @@ $(document).ready(function() {
 		});
 		
 	})
-});
+
+	$('#douban').blur(function() {
+		var value = $(this).val()
+		$.ajax({
+			url: 'https://api.douban.com/v2/movie/subject/'+value,
+			type: 'get',
+			dataType: 'jsonp',
+			jsonp: 'callback',
+			success: function(data) {
+				$('#inputTitle').val(data.title)
+				$('#inputGuider').val(data.directors[0].name)
+				$('#inputCountry').val(data.countries[0])
+				$('#inputPoster').val(data.images.large)
+				$('#inputYear').val(data.year)
+				$('#inputSummary').val(data.summary)
+			}
+		})
+		
+		
+
+	})
+
+})

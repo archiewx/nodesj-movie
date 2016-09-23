@@ -21,6 +21,9 @@ exports.signin = function(req, res) {
 	console.log(req.headers.referer);
 	var refPath = req.headers.referer;
 	refPath = refPath.match(/(\/(\w*))*$/g)[0];
+	if(refPath === '/signin' || refPath === '/signup') {
+		refPath = '/';
+	}
 	User.findOne({name:name}, function(err, user) {
 		if(err) {
 			console.log(err);

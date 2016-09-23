@@ -1,7 +1,13 @@
 module.exports = function (grunt) {
 
 	grunt.initConfig({
-		watch: {
+		jshint: {
+			build: ['*.js', './public/js/*.js'],
+			options: {
+				jshintrc: '.jshintrc'
+			}
+		},     
+		watch: { 
 			jade: {
 				files: ['views/**'],
 				options: {
@@ -39,6 +45,7 @@ module.exports = function (grunt) {
 				logConcurrentOutput: true
 			}
 		}
+
 
 	})
 
